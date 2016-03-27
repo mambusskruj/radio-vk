@@ -1,0 +1,58 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:          radio
+# Required-Start:    $all
+# Required-Stop:     $all
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: radio-vk
+# Description:       This file should be used to construct scripts to be placed in /etc/init.d
+### END INIT INFO
+
+start() {
+        echo "Starting RADIO_VK services:"
+
+        #можно использовать дзапуск демона в демоне
+        #daemon python3 /home/ms/Development/python-projects/radio.py --name=radioVK 
+        python3 /home/ms/Development/python-projects/radio.py &
+}	
+stop() {
+        echo $"Shutting down KIND services: "
+
+        #можно использовать дзапуск демона в демоне
+        #kill $(cat /var/run/radioVK.pid)
+
+        PID_temp=$(ps aux | grep radio.py)
+        PID=$(pidof $PID_temp) 
+        echo $PID 
+        kill $PID 
+}	
+restart() {
+        echo $"Restarting KIND services: "
+
+        #можно использовать дзапуск демона в демоне	
+        #kill $(cat /var/run/radioVK.pid)
+        #daemon python3 /home/ms/Development/python-projects/radio.py --name=radioVK 
+        
+        PID_temp=$(ps aux | grep radio.py)
+        PID=$(pidof $PID_temp) 
+        echo $PID
+        kill $PID
+        python3 /home/ms/Development/python-projects/radio.py &
+}	
+case "$1" in
+  start)
+          start
+        ;;
+  stop)
+          stop
+        ;;
+  restart)
+          restart
+        ;;
+  *)
+        echo $"Usage: $0 {start|stop|restart}"
+        exit 1
+esac
+exit $?
