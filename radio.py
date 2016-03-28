@@ -3,11 +3,15 @@ import json
 import random
 import time
 
-access_token = "051e317a5c061c1e9997011c139086e85b390c36d2617e07a1c28edc24ccff4d8ca4895c6ab7bdfd81421"
-public_id = "-24142811" #"-35634642"
+access_token = ''
+public_id = ''
 
-# https://api.vk.com/method/audio.setBroadcast?audio=-24142811_456239028&target_ids=-24142811&v=5.45&access_token=051e317a5c061c1e9997011c139086e85b390c36d2617e07a1c28edc24ccff4d8ca4895c6ab7bdfd81421
-# реквест на трансляцию аудио в паблик. нужны "идентификатор сообщества_идентификатор аудио"
+info = json.loads(open('account-vk.json').read())
+
+for member_info in info:
+	access_token = member_info['token']
+	public_id = member_info['public id']
+
 
 list_audio = []
 list_random_playlist = []
@@ -23,7 +27,6 @@ def outJson(listdict_from_request):
 
 def getAudioList():
 	#rq = requests.get('https://api.vk.com/method/audio.get?owner_id='+public_id+'&album_id=0&v=5.45&access_token='+access_token).json()
-	#rq = requests.get('https://api.vk.com/method/audio.get?owner_id=winecollection&album_id=0&v=5.45&access_token=051e317a5c061c1e9997011c139086e85b390c36d2617e07a1c28edc24ccff4d8ca4895c6ab7bdfd81421').json()
 	listdict_from_request = []
 	dict_request = {}
 	id_list = []
@@ -79,7 +82,7 @@ def randomPlay(random_playlist):
 			time_dict[audio['id']] = audio['duration']
 
 	for song in random_playlist:
-		rq2 = requests.get('https://api.vk.com/method/audio.setBroadcast?audio='+public_id+'_'+str(song)+'&target_ids=-24142811&v=5.45&access_token='+access_token).json()
+		rq2 = requests.get('https://api.vk.com/method/audio.setBroadcast?audio='+public_id+'_'+str(song)+'&target_ids='+public_id+'&v=5.45&access_token='+access_token).json()
 		time.sleep(time_dict[song])
 
 
