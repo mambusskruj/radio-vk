@@ -88,7 +88,8 @@ def randomPlay(random_playlist):
 
 def removePastSongs(song_list, past_playlist):
 	for song in past_playlist:
-		song_list.remove(song)
+		if song in song_list:
+			song_list.remove(song) 
 
 	return song_list
 
