@@ -15,7 +15,7 @@ start() {
 
         #можно использовать дзапуск демона в демоне
         #daemon python3 /home/ms/Development/python-projects/radio.py --name=radioVK 
-        python3 /home/local/radio/radio.py >> /home/local/radio/radio.log 2>&1
+        python3 /home/local/radio/radio.py & >> /home/local/radio/radio.log 2>&1
 }	
 stop() {
         echo $"Shutting down RADIO-VK service"
@@ -39,7 +39,7 @@ restart() {
         PID=$(pidof $PID_temp) 
         echo $PID
         kill $PID
-        python3 /home/local/radio/radio.py >> /home/local/radio/radio.log 2>&1
+        python3 /home/local/radio/radio.py & >> /home/local/radio/radio.log 2>&1
 }
 case "$1" in
   start)
