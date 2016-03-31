@@ -11,14 +11,14 @@
 ### END INIT INFO
 
 start() {
-        echo "Starting RADIO_VK services:"
+        echo "Starting RADIO-VK service"
 
         #можно использовать дзапуск демона в демоне
         #daemon python3 /home/ms/Development/python-projects/radio.py --name=radioVK 
-        python3 /home/ms/Development/python-projects/radio.py &
+        python3 /home/local/radio/radio.py >> /home/local/radio/radio.log 2>&1
 }	
 stop() {
-        echo $"Shutting down KIND services: "
+        echo $"Shutting down RADIO-VK service"
 
         #можно использовать дзапуск демона в демоне
         #kill $(cat /var/run/radioVK.pid)
@@ -29,7 +29,7 @@ stop() {
         kill $PID 
 }	
 restart() {
-        echo $"Restarting KIND services: "
+        echo $"Restarting RADIO-VK services"
 
         #можно использовать дзапуск демона в демоне	
         #kill $(cat /var/run/radioVK.pid)
@@ -39,8 +39,8 @@ restart() {
         PID=$(pidof $PID_temp) 
         echo $PID
         kill $PID
-        python3 /home/ms/Development/python-projects/radio.py &
-}	
+        python3 /home/local/radio/radio.py >> /home/local/radio/radio.log 2>&1
+}
 case "$1" in
   start)
           start
